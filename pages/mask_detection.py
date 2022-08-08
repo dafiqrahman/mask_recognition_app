@@ -3,7 +3,6 @@ import numpy as np
 import torch
 import torchvision
 from script.model_detection import model
-from script.plot import Annotator
 from PIL import Image
 import cv2
 import os
@@ -18,10 +17,12 @@ from streamlit_webrtc import (
 )
 
 
-st.markdown("<h1 style='text-align: center;'>Mask Recognition Application</h1>",
+st.markdown("<h1 style='text-align: center;'>😷 Mask Detection Application</h1>",
             unsafe_allow_html=True)
 
 
+st.markdown("<h4>🖼  Detect From Image</h4><p>Im reccomend detect from image, since using realtime camera is broken when I deploy it on the website.</p>",
+            unsafe_allow_html=True)
 # ------------ by Image --------------
 image_file = st.file_uploader("Choose a file")
 col1, col2 = st.columns(2)
@@ -56,6 +57,8 @@ if image_file is not None:
 
 # --------------------- end by image ------------------------
 
+st.markdown("<h4> 📸 Detect From Camera</h4>", unsafe_allow_html=True)
+
 RTC_CONFIGURATION = RTCConfiguration(
     {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
 )
@@ -75,18 +78,6 @@ class VideoProcessor(VideoProcessorBase):
 
         return av.VideoFrame.from_ndarray(np.squeeze(results.render()), format="bgr24")
 
-# def video_frame_callback(frame):
-#     img = frame.to_ndarray(format="bgr24")
-#     annot = Annotator(img)
-#     results = model(img)
-#     rect_data = results.pandas().xyxy[0].values
-
-#     for pred in rect_data:
-#         annot.draw_box(pred)
-
-#     img_a = annot.results()
-#     return av.VideoFrame.from_ndarray(img_a, format="bgr24")
-
 
 webrtc_streamer(
     key="opencv-filter",
@@ -95,3 +86,8 @@ webrtc_streamer(
     media_stream_constraints={"video": True, "audio": False},
     async_processing=True,
 )
+
+
+st.markdown("<h3> What is this ❓</h3 > <p> this is an implementation of object detection in computer vision, where the machine looks for patterns to find out <b> what, where, and how many objects it wants to detect </b>. In this application im using an algorithm called YOLO (You Only Look Once) version 5, you can read the paper at the following link: <a href = 'https: // arxiv.org/abs/2108.11539' >🔗YOLOv5 Paper🔗 </a> </p>", unsafe_allow_html=True)
+
+st.markdown("<h3> Resource I used 🧰 </h3> <p> YOLOv5 : <a href = 'https: // github.com/ultralytics/yolov5' > YOLOv5 Github</a></p> <p> Mask Dataset : <a href = 'https://universe.roboflow.com/khdas567-gmail-com/mask-wearing-eblit'> Roboflow </a>", unsafe_allow_html=True)

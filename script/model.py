@@ -44,7 +44,7 @@ test_transform = transforms.Compose([
 class Predict(nn.Module):
     def __init__(self):
         super().__init__()
-        self.label2cat = ["with mask", "without mask"]
+        self.label2cat = ["😷 with mask", "😶 without mask"]
         self.model = MaskRecognition()
         self.model.load_state_dict(torch.load(
             "artifact/weights_best.pth", map_location='cpu'))
