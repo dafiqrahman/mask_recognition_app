@@ -47,7 +47,7 @@ class Predict(nn.Module):
         self.label2cat = ["😷 with mask", "😶 without mask"]
         self.model = MaskRecognition()
         self.model.load_state_dict(torch.load(
-            "artifact/weights_best.pth", map_location='cpu'))
+            "../artifact/weights_best.pth", map_location='cpu'))
         self.model.eval()
 
     def predict(self, img):
