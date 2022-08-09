@@ -8,7 +8,7 @@ from torchvision import datasets, transforms
 class MaskRecognition(nn.Module):
     def __init__(self):
         super().__init__()
-        self.mnet = model = torch.hub.load(
+        self.mnet = torch.hub.load(
             'pytorch/vision:v0.10.0', 'mobilenet_v2', pretrained=False)
         self.freeze()
         self.mnet.classifier = nn.Sequential(
